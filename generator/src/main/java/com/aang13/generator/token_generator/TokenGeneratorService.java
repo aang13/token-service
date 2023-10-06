@@ -1,6 +1,5 @@
 package com.aang13.generator.token_generator;
 
-import com.aang13.generator.token_generator.dto.TokenGeneratorDTO;
 import com.aang13.generator.token_generator.dto.TokenGeneratorPostRequest;
 import com.aang13.generator.token_generator.dto.TokenGeneratorPostResponse;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,7 @@ public class TokenGeneratorService {
             int randomDigit = tokenPostRequest.numberList().get(randomIndex);
             token.append(randomDigit);
         }
-
-        TokenGeneratorDTO dto = new TokenGeneratorDTO(token.toString());
-        return new TokenGeneratorPostResponse(dto);
+        
+        return new TokenGeneratorPostResponse(token.toString());
     }
 }

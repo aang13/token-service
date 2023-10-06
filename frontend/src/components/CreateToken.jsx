@@ -3,9 +3,18 @@ import api from '../api/axiosConfig'
 const CreateToken = () => {
 
     const [token, setToken] = useState("")
+    const [selectedDigits, setSelectedDigits] = useState([])
+
+    const handleDigitClick = (digit) => {
+        if (selectedDigits.includes(digit)) {
+            setSelectedDigits(selectedDigits.filter((d) => d !== digit));
+        } else {
+            setSelectedDigits([...selectedDigits, digit]);
+        }
+    }
 
     const generate = () => {
-        api.post("http://localhost:8080/generate",{"numberList":[2,3,4]})
+        api.post("http://localhost:8080/generate",{"numberList":selectedDigits})
         .then(response=>{
             setToken(response.data)
         })
@@ -19,7 +28,21 @@ const CreateToken = () => {
                 </a>
             </div>
         </nav>
-        <div className="container d-flex justify-content-center align-items-center vh-100">
+        <div className="container mt-4">
+            <p className="text-center">Please select the digits you want to create the token with:</p>
+            <div className="d-flex justify-content-center">
+                {Array.from({ length: 10 }, (_, digit) => (
+                    <button
+                        key={digit}
+                        className={`btn btn-outline-primary mx-2 ${selectedDigits.includes(digit) && 'btn-primary'}`}
+                        onClick={() => handleDigitClick(digit)}
+                    >
+                        {digit}
+                    </button>
+                ))}
+            </div>
+        </div>
+        <div className="container d-flex justify-content-center mt-5">
                 <button type="button" className="btn btn-primary" onClick={generate}>Generate Token</button>
         </div>
         </>

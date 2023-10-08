@@ -17,7 +17,7 @@ public class TokenValidatorController {
     }
 
     @GetMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE)
-    public TokenValidatorGetResponse validateToken(@RequestParam("token") TokenValidatorGetRequest request) {
+    public TokenValidatorGetResponse validateToken(@RequestParam("token") TokenValidatorGetRequest request) throws Exception {
         return service.validateToken(request);
     }
 }

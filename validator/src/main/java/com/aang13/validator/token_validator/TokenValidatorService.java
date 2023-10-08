@@ -4,13 +4,16 @@ import com.aang13.validator.token_validator.dto.TokenValidatorGetRequest;
 import com.aang13.validator.token_validator.dto.TokenValidatorGetResponse;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class TokenValidatorService {
-    public TokenValidatorGetResponse validateToken(TokenValidatorGetRequest request) {
-        return new TokenValidatorGetResponse(isValidToken(request.token()));
+    int preferredTokenLength = 16;
+    public TokenValidatorGetResponse validateToken(TokenValidatorGetRequest request) throws Exception {
+        String token = request.token();
+
+        if(token.length() != preferredTokenLength) {
+            throw new Exception();
+        }
+        return new TokenValidatorGetResponse(isValidToken(token));
     }
 
     private boolean isValidToken(String number) {

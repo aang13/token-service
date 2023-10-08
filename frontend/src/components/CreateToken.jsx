@@ -21,11 +21,12 @@ const CreateToken = () => {
             return
         }
         setIsLoading(true)
-        api.post("http://localhost:8001/generate",{"numberList":selectedDigits})
+        api.post("http://localhost:8001/generate",{"numberList":selectedDigits},
+        {validateStatus: () => true})
         .then(response=>{
             setToken(response.data)
         }).catch(error=>{
-            alert("Error creating token!")
+            alert(error.response.data.detail)
         }).finally(()=>{
             setIsLoading(false)
             setSelectedDigits([])

@@ -18,7 +18,7 @@ public class TokenGeneratorController {
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public TokenGeneratorPostResponse generateToken(@RequestBody @Valid TokenGeneratorPostRequest tokenPostRequest) {
+    public TokenGeneratorPostResponse generateToken(@RequestBody @Valid TokenGeneratorPostRequest tokenPostRequest) throws Exception {
         return this.tokenService.generateToken(tokenPostRequest);
     }
 }

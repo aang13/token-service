@@ -19,11 +19,12 @@ const ValidateToken = (props) => {
 
     const validate =() => {
         setIsLoading(true)
-        api.get("http://localhost:8002/validator",{params:{token: token}})
+        api.get("http://localhost:8002/validator",{params:{token: token}},
+        {validateStatus: () => true})
         .then(response=>{
             setIsValid(response.data.isValid)
         }).catch(error=>{
-            alert("Error validating token!")
+            alert(error.response.data.detail)
         }).finally(()=>{
             setIsLoading(false)
             setIsApiResponse(true)

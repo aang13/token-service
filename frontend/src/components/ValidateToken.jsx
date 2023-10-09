@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import api from '../api/axiosConfig'
+import api from '../api/ApiService'
 import 'bootstrap-icons/font/bootstrap-icons.css'; 
 
 const ValidateToken = (props) => {
+    const regex = /^\d{16}$/
     const [token, setToken]= useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isValid, setIsValid] = useState(false)
@@ -18,16 +19,21 @@ const ValidateToken = (props) => {
     }
 
     const validate =() => {
+        let sanitizedToken = token.replace(/-/g,'')
+        if (!regex.test(sanitizedToken)) {
+            alert("Token is not valid. Enter a valid token.")
+            return
+        } 
         setIsLoading(true)
-        api.get("http://localhost:8002/validator",{params:{token: token}},
-        {validateStatus: () => true})
-        .then(response=>{
-            setIsValid(response.data.isValid)
-        }).catch(error=>{
-            alert(error.response.data.detail)
-        }).finally(()=>{
-            setIsLoading(false)
-            setIsApiResponse(true)
+        api.validateToken(token)
+            .then(response=>{
+                setIsLoading(false)
+                setIsValid(response.data.isValid)
+            }).catch(error=>{
+                setIsLoading(false)
+                alert(error.response.data.detail)
+            }).finally(()=>{
+                setIsApiResponse(true)
         })
     }
 
@@ -37,7 +43,7 @@ const ValidateToken = (props) => {
             <div className="container mt-4">
                 <p className="text-center">Generated Token</p>
                 <div className="d-flex justify-content-center">
-                    <input type="text" name="token" value={token} className="form-control" style={{ width: '200px' }} onChange={(e)=>handleChange(e)}/>
+                    <input type="text" name="token" value={token} className="form-control" style={{ width: '220px' }} onChange={(e)=>handleChange(e)}/>
                 </div>
                 
                 <div className="d-flex justify-content-center">

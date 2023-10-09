@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import api from '../api/axiosConfig'
+import api from '../api/ApiService'
 import ValidateToken from './ValidateToken'
 const CreateToken = () => {
 
@@ -21,15 +21,16 @@ const CreateToken = () => {
             return
         }
         setIsLoading(true)
-        api.post("http://localhost:8001/generate",{"numberList":selectedDigits},
-        {validateStatus: () => true})
-        .then(response=>{
-            setToken(response.data)
-        }).catch(error=>{
-            alert(error.response.data.detail)
-        }).finally(()=>{
-            setIsLoading(false)
-            setSelectedDigits([])
+
+        api.getToken(selectedDigits)
+            .then(response=>{
+                setIsLoading(false)
+                setToken(response.data)
+            }).catch(error=>{
+                setIsLoading(false)
+                alert(error.response.data.detail)
+            }).finally(()=>{
+                setSelectedDigits([])
         })
     }
     return(

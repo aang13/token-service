@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/generate")
+@RequestMapping("/generator")
 @CrossOrigin
 public class TokenGeneratorController {
 

@@ -20,7 +20,7 @@ The App will run on `port:8001`
 
 ## Create a Token generation request:
 ```shell
-curl --location 'http://localhost:8001/generate' \
+curl --location 'http://localhost:8001/generator' \
 --header 'Content-Type: application/json' \
 --data '{
     "numberList": [1,2,3,4,6,7,8,9]

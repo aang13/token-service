@@ -1,6 +1,6 @@
 # GENERATOR SERVICE
 
-Spring Boot Application for creating Token
+Spring Boot Application for Creating Token
 
 ## Technologies
  - Spring Boot 3.1.4

@@ -9,11 +9,17 @@ public class TokenValidatorService {
     int preferredTokenLength = 16;
     public TokenValidatorGetResponse validateToken(TokenValidatorGetRequest request) throws Exception {
         String token = request.token();
+        String sanitizedToken = sanitizeToken(token);
 
-        if(token.length() != preferredTokenLength) {
+        if(sanitizedToken.length() != preferredTokenLength) {
             throw new Exception();
         }
-        return new TokenValidatorGetResponse(isValidToken(token));
+        return new TokenValidatorGetResponse(isValidToken(sanitizedToken));
+    }
+
+    private String sanitizeToken(String token) {
+        String result = token.replaceAll("-","");
+        return result;
     }
 
     private boolean isValidToken(String number) {

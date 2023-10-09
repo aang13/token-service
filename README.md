@@ -17,3 +17,7 @@ start.bat
 ```shell
 chmod +x start.sh
 ```
+
+## Individual Project Run & Test:
+
+Unit Tests and Projects can be run individually. Please follow each Project's readme to run the project & unit test individually.

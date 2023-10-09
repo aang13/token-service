@@ -4,6 +4,9 @@ import com.aang13.validator.token_validator.dto.TokenValidatorGetRequest;
 import com.aang13.validator.token_validator.dto.TokenValidatorGetResponse;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 public class TokenValidatorService {
     int preferredTokenLength = 16;
@@ -17,8 +20,18 @@ public class TokenValidatorService {
         return new TokenValidatorGetResponse(isValidToken(sanitizedToken));
     }
 
-    private String sanitizeToken(String token) {
+    private String sanitizeToken(String token) throws Exception {
         String result = token.replaceAll("-","");
+
+        String regexPattern = "^[0-9]{16}$";
+        Pattern pattern = Pattern.compile(regexPattern);
+
+        // Match the input against the pattern
+        Matcher matcher = pattern.matcher(result);
+        if(!matcher.matches()) {
+            throw new Exception();
+        }
+
         return result;
     }
 

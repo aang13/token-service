@@ -26,3 +26,8 @@ curl --location 'http://localhost:8001/generator' \
     "numberList": [1,2,3,4,6,7,8,9]
 }'
 ```
+
+## Run Tests:
+```shell
+mvn test
+```

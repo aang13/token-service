@@ -22,3 +22,8 @@ The App will run on `port:8002`
 ```shell
 curl --location 'http://localhost:8002/validator?token=5425-2334-3010-9903'
 ```
+
+## Run Tests:
+```shell
+mvn test
+```

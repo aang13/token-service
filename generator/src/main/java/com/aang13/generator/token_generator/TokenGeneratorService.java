@@ -9,22 +9,43 @@ import java.util.Random;
 
 @Service
 public class TokenGeneratorService {
-    int length = 16;
+    int desiredTokenLength = 16;
     public TokenGeneratorPostResponse generateToken(TokenGeneratorPostRequest tokenPostRequest) throws Exception {
         List<Integer> numberList = tokenPostRequest.numberList();
 
         if(numberList.size() == 0) {
             throw new Exception();
         }
+
+        StringBuilder token = generate(numberList);
+        String formattedToken = formatToken(token.toString());
+        
+        return new TokenGeneratorPostResponse(formattedToken);
+    }
+
+    private StringBuilder generate(List<Integer> numberList) {
         StringBuilder token = new StringBuilder();
 
         Random random = new Random();
-        for(int i= 0; i< length; i++){
+        for(int i= 0; i< desiredTokenLength; i++){
             int randomIndex = random.nextInt(numberList.size());
             int randomDigit = numberList.get(randomIndex);
             token.append(randomDigit);
         }
-        
-        return new TokenGeneratorPostResponse(token.toString());
+
+        return token;
+    }
+
+    private String formatToken(String token) {
+        String formattedToken = "";
+
+        for( int i =0; i< token.length(); i++) {
+            if(i%4 == 0 && i != 0 ) {
+                formattedToken += "-";
+            }
+            formattedToken += token.charAt(i);
+        }
+
+        return formattedToken;
     }
 }
